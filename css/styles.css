@@ -1,0 +1,53 @@
+/* 基础与变量 */
+@import url('./base.css');
+@import url('./layout.css');
+@import url('./resource.css');
+@import url('./button.css');
+@import url('./modal.css');
+@import url('./animation.css');
+@import url('./message.css');
+
+/* 设置下拉菜单样式 */
+#settings-dropdown {
+    background: var(--bg-light, #fff);
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius-md, 12px);
+    box-shadow: 0 4px 16px rgba(33,150,243,0.10), 0 1.5px 6px rgba(105,198,157,0.08);
+    min-width: 180px;
+    padding: 8px 0 6px 0;
+    font-size: 1rem;
+    color: var(--text-color, #333);
+    z-index: 99999;
+    position: absolute;
+    right: 32px;
+    top: 48px;
+    animation: fadeIn 0.2s;
+}
+#settings-dropdown button,
+#settings-dropdown label {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 22px;
+    font-size: 1em;
+    color: var(--text-color, #333);
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.15s;
+    outline: none;
+    box-shadow: none;
+    display: block;
+}
+#settings-dropdown button:hover,
+#settings-dropdown label:hover {
+    background: var(--primary-light, #e3f2fd);
+    color: var(--primary-dark, #388e3c);
+}
+#settings-dropdown label {
+    margin: 0;
+    cursor: pointer;
+}
+#settings-dropdown input[type="file"] {
+    display: none;
+}

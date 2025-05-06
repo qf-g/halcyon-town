@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>栖迟之墟 (Halcyon Town) - 文字放置类农场模拟游戏</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 顶部信息栏 -->
+        <header class="top-bar">
+            <div class="game-title">栖迟之墟</div>
+            <div class="resource-display">
+                <div class="resource" id="coins">
+                    <span class="resource-label">金币</span>
+                    <span class="resource-value">0.0</span>
+                </div>
+                <div class="resource" id="reputation">
+                    <span class="resource-label">声望</span>
+                    <span class="resource-value">0.0</span>
+                </div>
+                <div class="resource" id="day-count">
+                    <span class="resource-value">第1天</span>
+                </div>
+            </div>
+            <div class="settings-button">设置</div>
+        </header>
+
+        <div class="main-content">
+            <!-- 左侧资源面板 -->
+            <div class="left-panel panel">
+                <div class="panel-header">
+                    <h3>资源中心</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="resources-list" id="resources-container">
+                        <!-- 资源会动态添加到这里 -->
+                    </div>
+                    
+                    <!-- 动态文字反馈区移动到这里 -->
+                    <div class="feedback-area" id="feedback-area">
+                        <!-- 动态反馈会出现在这里，如 "+5 🌾" -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中部操作面板 -->
+            <div class="center-panel panel">
+                <div class="panel-header">
+                    <h3>操作</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="action-buttons" id="action-buttons">
+                        <!-- 操作按钮将由JS动态添加 -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧消息面板 -->
+            <div class="right-panel panel message-panel">
+                <div class="panel-header">
+                    <h3>消息日志</h3>
+                </div>
+                <div class="panel-content">
+                    <!-- 游戏消息区 -->
+                    <div class="message-area" id="message-area">
+                        <p>欢迎来到栖迟之墟，这里是你的新家园。</p>
+                        <p>点击中间的按钮开始你的农场之旅吧！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部状态栏 -->
+        <footer class="bottom-bar">
+            <div class="status-text" id="current-status">平静的一天...</div>
+            <div class="save-status" id="save-status">自动保存</div>
+        </footer>
+    </div>
+
+    <!-- 弹窗模板 -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-title">标题</h2>
+            <div id="modal-body">内容将在这里显示</div>
+            <div id="modal-buttons">
+                <!-- 动态添加按钮 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局UI层 - 用于显示各种弹窗、动效和全局交互元素 -->
+    <div id="global-ui-layer" class="global-ui-layer">
+        <div id="notifications-container" class="notifications-container"></div>
+        <div id="animations-container" class="animations-container"></div>
+    </div>
+
+    <!-- JavaScript 文件 -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>

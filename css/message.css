@@ -1,0 +1,42 @@
+/* 消息区、日志等 */
+.message-area {
+    flex: 1;
+    background-color: var(--bg-light);
+    border: 1px solid #e8e8e8;
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+    margin-bottom: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 220px);
+    box-shadow: var(--shadow-sm);
+}
+.message-area p {
+    margin-bottom: 8px;
+    line-height: 1.4;
+    padding: 6px 10px;
+    border-radius: var(--border-radius-sm);
+    background: var(--bg-medium);
+    animation: fadeIn 0.5s ease-out;
+    font-size: 0.9rem;
+}
+.message-area p.success {
+    background-color: #e7f4e4;
+    border-left: 3px solid var(--primary-color);
+}
+.message-area p.warning {
+    background-color: #fff8e6;
+    border-left: 3px solid #ffcc00;
+}
+.message-area p.error {
+    background-color: #ffebee;
+    border-left: 3px solid #f44336;
+}
+.message-area p.event {
+    background-color: #e6f7ff;
+    border-left: 3px solid #1890ff;
+    font-weight: 500;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
