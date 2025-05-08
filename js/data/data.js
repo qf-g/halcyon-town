@@ -35,7 +35,6 @@ window.gameData = window.gameData || JSON.parse(JSON.stringify(DEFAULT_GAME_DATA
 let gameData = window.gameData;
 
 export async function initialize() {
-    console.log('[initialize] 初始化数据模块');
     // 初始化时尝试加载本地存档
     if (!loadGame()) {
         console.log('[initialize] loadGame 失败，调用 saveGame');
@@ -44,7 +43,6 @@ export async function initialize() {
 }
 
 export function saveGame() {
-    console.log('[saveGame] 被调用，当前 gameData:', JSON.stringify(window.gameData));
     if (!window.gameData.buildings) window.gameData.buildings = {};
     window.gameData.gameTime.lastTimestamp = Date.now();
     window.gameData.saveTime = Date.now();
@@ -54,7 +52,6 @@ export function saveGame() {
 
 export function loadGame() {
     const savedData = localStorage.getItem('halcyon_town_save');
-    console.log('[loadGame] localStorage:', savedData);
     if (savedData) {
         try {
             const parsedData = JSON.parse(savedData);
@@ -66,7 +63,6 @@ export function loadGame() {
             Object.assign(window.gameData, parsedData);
             if (!window.gameData.buildings) window.gameData.buildings = {};
             window.gameData.gameTime.lastTimestamp = Date.now();
-            console.log('最终加载到的 gameData:', JSON.stringify(window.gameData));
             return true;
         } catch (e) {
             console.error('存档解析失败', e);
@@ -81,9 +77,24 @@ export function resetGame() {
     // 不再替换 gameData 引用，改为保持引用不变
     Object.assign(window.gameData, JSON.parse(JSON.stringify(DEFAULT_GAME_DATA)));
     window.gameData.gameTime.lastTimestamp = Date.now();
-    for (const key in window.gameData.resources) window.gameData.resources[key] = 0;
+    // 重置时给予基础物资
+    window.gameData.resources.wheat = 0;
+    window.gameData.resources.wood = 0;
+    window.gameData.resources.stone = 0;
+    window.gameData.resources.villager = 0; // 重置流民数量为0
+    window.gameData.assignedVillagers = {}; // 清空所有流民分配
+    for (const key in window.gameData.resources) {
+        if (!['wheat','wood','stone','coins','reputation','rope','hoe','bow-saw','eggs','villager'].includes(key)) {
+            window.gameData.resources[key] = 0;
+        }
+    }
     window.gameData.unlocked = { buildings: [], actions: ['gather-wheat', 'chop-wood', 'sell-resources'] };
     window.gameData.buildings = {};
+    saveGame(); // 重置后立即保存，确保localStorage同步
+    // 新增：重置后刷新UI
+    setTimeout(() => {
+        document.dispatchEvent(new CustomEvent('gameReset'));
+    }, 0);
     return true;
 }
 
@@ -261,6 +272,26 @@ export function applyOfflineRewards(offline) {
     }
     window.gameData.gameTime.lastTimestamp = Date.now();
     saveGame();
+}
+
+// 流民分配相关
+export function getAssignedVillager(facilityId) {
+    if (!window.gameData.assignedVillagers) window.gameData.assignedVillagers = {};
+    return window.gameData.assignedVillagers[facilityId] || 0;
+}
+export function setAssignedVillager(facilityId, count) {
+    if (!window.gameData.assignedVillagers) window.gameData.assignedVillagers = {};
+    window.gameData.assignedVillagers[facilityId] = Math.max(0, count);
+    document.dispatchEvent(new CustomEvent('resourceChanged', { detail: { resource: 'villager' } }));
+    // 移除自动刷新资源面板，避免点击按钮时触发动画
+}
+export function getTotalAssignedVillager() {
+    if (!window.gameData.assignedVillagers) return 0;
+    return Object.values(window.gameData.assignedVillagers).reduce((a, b) => a + b, 0);
+}
+export function getFreeVillager() {
+    const total = window.gameData.resources['villager'] || 0;
+    return total - getTotalAssignedVillager();
 }
 
 // 预留云端存档接口

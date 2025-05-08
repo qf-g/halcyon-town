@@ -27,7 +27,7 @@ export function checkAllUnlocks() {
                 unlock('actions', item.id);
                 changed = true;
             }
-        } else if (item.type === 'building') {
+        } else if (item.type === 'building' || item.type === 'facility') {
             if (!isUnlocked('buildings', item.id) && checkRequirements(item.requirements)) {
                 unlock('buildings', item.id);
                 changed = true;

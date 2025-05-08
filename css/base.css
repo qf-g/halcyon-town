@@ -1,3 +1,17 @@
+/* base.css: Reset and global variables */
+/* Reset */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; }
+/* Variables */
+:root {
+  --bg-color: #f0f7ff;
+  --text-color: #333;
+  --primary-color: #007bff;
+  --panel-bg: #fff;
+  --panel-border: #e0e0e0;
+  --shadow-md: 0 2px 6px rgba(0,0,0,0.1);
+}
+
 /* 全局基础、变量、reset、字体等 */
 * {
     margin: 0;
@@ -23,8 +37,61 @@ body {
     --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
     --border-radius-sm: 6px;
     --border-radius-md: 12px;
     --border-radius-lg: 18px;
     --transition-normal: all 0.3s ease;
+}
+
+/* 设置下拉菜单为绿色风格，风格与主页统一 */
+.settings-dropdown {
+    position: absolute;
+    z-index: 9999;
+    background: #e7f4e4;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1.5px solid #cce2f7;
+    min-width: 140px;
+    max-width: 180px;
+    padding: 10px 0 6px 0;
+    margin-top: 4px;
+    right: 0;
+    left: auto;
+    overflow: visible;
+    color: #333;
+    font-size: 1rem;
+}
+.settings-dropdown button {
+    display: block;
+    width: 92%;
+    margin: 8px auto;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    color: inherit;
+    padding: 8px 12px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+.settings-dropdown button:hover {
+    background: #d2e9d0;
+}
+.dark-mode .settings-dropdown {
+    background: #26332a;
+    color: #eee;
+    border: 1.5px solid #444;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+}
+.dark-mode .settings-dropdown button {
+    background: none;
+    color: #eee;
+}
+.dark-mode .settings-dropdown button:hover {
+    background: #2c323a;
 }

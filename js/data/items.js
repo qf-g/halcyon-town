@@ -79,8 +79,8 @@ export const items = [
         name: '田地',
         description: '自动产出小麦，需要1流民和1锄头。',
         icon: '🌱',
-        buildCost: { wood: 20, stone: 10 },
-        autoYield: { wheat: 5 },
+        buildCost: { wood: 20, stone: 10, hoe: 1 },
+        autoYield: { wheat: 20 },
         require: { villager: 1, hoe: 1 },
         cycle: 10
     },
@@ -90,8 +90,8 @@ export const items = [
         name: '采石场',
         description: '自动产出石头，需要1流民和1镐子。',
         icon: '⛏️',
-        buildCost: { wood: 15, stone: 20 },
-        autoYield: { stone: 3 },
+        buildCost: { wood: 15, stone: 20, pickaxe: 1 },
+        autoYield: { stone: 10 },
         require: { villager: 1, pickaxe: 1 },
         cycle: 10
     },
@@ -101,10 +101,103 @@ export const items = [
         name: '锯木厂',
         description: '自动产出木材，需要1流民和1弓锯。',
         icon: '🏭',
-        buildCost: { wood: 30, stone: 10 },
-        autoYield: { wood: 3 },
+        buildCost: { wood: 30, stone: 10, 'bow-saw': 1 },
+        autoYield: { wood: 10 },
         require: { villager: 1, 'bow-saw': 1 },
         cycle: 10
+    },
+    {
+        id: 'chicken-coop',
+        type: 'facility',
+        name: '鸡舍',
+        description: '自动产出鸡蛋，需要1流民和1小麦作为饲料。',
+        icon: '🐔',
+        buildCost: { wood: 1000, stone: 300 },
+        autoYield: { egg: 10 },
+        require: { villager: 1, wheat: 1 },
+        cycle: 10
+    },
+    {
+        id: 'bee-house',
+        type: 'facility',
+        name: '蜂房',
+        description: '自动产出蜂蜜，需要1流民和1小麦作为蜜蜂饲料。',
+        icon: '🐝',
+        buildCost: { wood: 1000, stone: 300 },
+        autoYield: { honey: 8 },
+        require: { villager: 1, wheat: 1 },
+        cycle: 10
+    },
+    {
+        id: 'herb-garden',
+        type: 'facility',
+        name: '草药园',
+        description: '种植草药，草药可用于制作药剂或交易。',
+        icon: '🌿',
+        buildCost: { wood: 800, stone: 200 },
+        autoYield: { herb: 6 },
+        require: { villager: 1 },
+        cycle: 10
+    },
+    // 产出物资
+    {
+        id: 'egg',
+        type: 'product',
+        name: '鸡蛋',
+        description: '新鲜的鸡蛋，可食用或交易。',
+        icon: '🥚',
+        sellPrice: 8
+    },
+    {
+        id: 'honey',
+        type: 'product',
+        name: '蜂蜜',
+        description: '香甜的蜂蜜，可食用或交易。',
+        icon: '🍯',
+        sellPrice: 12
+    },
+    {
+        id: 'herb',
+        type: 'product',
+        name: '草药',
+        description: '可用于制作药剂或交易的草药。',
+        icon: '🌿',
+        sellPrice: 15
+    },
+    // 集市
+    {
+        id: 'market',
+        type: 'market',
+        name: '集市',
+        description: '可以交易产出物资（如鸡蛋、蜂蜜、草药），不可交易基础物资。',
+        icon: '🏪',
+        // 交易规则：仅允许 type: 'product' 的物品
+        tradeableTypes: ['product']
+    },
+    // 虚拟公司证券市场
+    {
+        id: 'stock-eco',
+        type: 'stock',
+        name: '绿野能源',
+        description: '虚拟公司股票，可买卖，价格波动。',
+        icon: '📈',
+        basePrice: 100
+    },
+    {
+        id: 'stock-food',
+        type: 'stock',
+        name: '丰收食品',
+        description: '虚拟公司股票，可买卖，价格波动。',
+        icon: '📊',
+        basePrice: 120
+    },
+    {
+        id: 'stock-tech',
+        type: 'stock',
+        name: '曙光科技',
+        description: '虚拟公司股票，可买卖，价格波动。',
+        icon: '💻',
+        basePrice: 150
     },
     // 操作
     {
@@ -120,7 +213,7 @@ export const items = [
         id: 'chop-wood',
         type: 'action',
         name: '伐木',
-        description: '砍一砍，木材到手。',
+        description: '要致富，先撸树。',
         icon: '🪓',
         cost: {},
         produce: { wood: 1 }
@@ -196,5 +289,32 @@ export const items = [
         icon: '🏭',
         cost: { wood: 30, stone: 10 },
         produce: { sawmill: 1 }
+    },
+    {
+        id: 'build-chicken-coop',
+        type: 'action',
+        name: '建造鸡舍',
+        description: '建造鸡舍用于自动产出鸡蛋。',
+        icon: '🐔',
+        cost: { wood: 1000, stone: 300 },
+        produce: { 'chicken-coop': 1 }
+    },
+    {
+        id: 'build-bee-house',
+        type: 'action',
+        name: '建造蜂房',
+        description: '建造蜂房用于自动产出蜂蜜。',
+        icon: '🐝',
+        cost: { wood: 1000, stone: 300 },
+        produce: { 'bee-house': 1 }
+    },
+    {
+        id: 'build-herb-garden',
+        type: 'action',
+        name: '建造草药园',
+        description: '建造草药园用于种植草药。',
+        icon: '🌿',
+        cost: { wood: 800, stone: 200 },
+        produce: { 'herb-garden': 1 }
     }
 ];

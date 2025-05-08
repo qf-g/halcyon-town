@@ -2,26 +2,29 @@
 .action-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--spacing-md);
 }
 .action-button {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 10px;
+    justify-content: flex-start; /* 改为左对齐 */
+    gap: var(--spacing-sm); /* 减小图标和文字间距 */
+    padding: var(--spacing-sm) var(--spacing-md); /* 调整内边距，左侧增加空间 */
     background-color: #e7f4e4;
     border: none;
     border-radius: var(--border-radius-md);
     cursor: pointer;
     transition: var(--transition-normal);
-    font-size: 0.9rem;
+    font-size: 0.75rem; /* 从0.65rem增加到0.75rem */
     font-weight: 500;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
     position: relative;
     overflow: visible !important;
-    width: calc(50% - 5px);
-    text-align: center;
+    text-align: left; /* 文本左对齐 */
+    height: 28px; /* 从26px增加到28px */
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .action-button.active {
     transform: scale(0.95);
@@ -36,8 +39,8 @@
     position: fixed;
     background: rgba(0, 0, 0, 0.85);
     color: #fff;
-    padding: 12px 18px;
-    border-radius: 6px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
     max-width: 320px;
     z-index: 99999;
     font-size: 0.9rem;
@@ -47,7 +50,7 @@
     visibility: hidden;
     pointer-events: none;
     margin-top: -15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
     text-align: left;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -65,4 +68,43 @@
     border-width: 8px;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.85) transparent transparent transparent;
+    transition: all 0.2s;
 }
+
+/* 向下弹出的提示窗口样式 */
+.button-tooltip.flipped {
+    transform: translate(-50%, 0); /* 向下弹出，无需上移 */
+    margin-top: 10px;
+}
+.button-tooltip.flipped.visible {
+    margin-top: 15px; /* 调整向下显示时的边距 */
+}
+.button-tooltip.flipped::after {
+    top: auto;
+    bottom: 100%;
+    border-color: transparent transparent rgba(0, 0, 0, 0.85) transparent;
+}
+
+/* 设置按钮完全继承金币/声望按钮样式，仅保留左侧间距 */
+.settings-button {
+    /* 继承 .resource 的样式 */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    position: relative;
+    margin-left: 8px;
+    transition: var(--transition-normal);
+    user-select: none;
+}
+.settings-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* 声望/金币按钮如果有特殊class，也可在此补充 */

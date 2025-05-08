@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <style>
+        #start-screen { background: #181c20 !important; color: #e0e0e0 !important; }
+    </style>
+    <script>
+        (function() {
+            var isDark = false;
+            try {
+                isDark = localStorage.getItem('halcyon_town_dark_mode') === '1';
+            } catch(e) {}
+            if (!isDark) {
+                document.write(
+                    '<style>#start-screen { background: #fff !important; color: #222 !important; }</style>'
+                );
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>栖迟之墟 (Halcyon Town) - 文字放置类农场模拟游戏</title>
+    <title>栖迟之墟 (Halcyon Town)</title>
+    <script>
+      (function() {
+        var isDark = false;
+        try {
+          isDark = localStorage.getItem('halcyon_town_dark_mode') === '1';
+        } catch(e) {}
+        document.write(
+          '<style>' +
+          (isDark
+            ? '#start-screen { background: #181c20 !important; color: #e0e0e0 !important; }'
+            : '#start-screen { background: #fff !important; color: #222 !important; }'
+          ) +
+          '</style>'
+        );
+      })();
+    </script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <div id="start-screen">
+      <div class="start-title" id="typewriter-title">欢迎来到栖迟之墟</div>
+      <div class="start-subtitle" id="typewriter-subtitle">「衡门之下，可以栖迟」</div>
+      <div class="start-bottom">
+        <div class="start-welcome">在文字与光影中，遇见生活的另一种可能。</div>
+        <div class="start-author">作者：轻风</div>
+      </div>
+    </div>
     <div class="game-container">
         <!-- 顶部信息栏 -->
         <header class="top-bar">
@@ -34,11 +74,10 @@
                     <h3>资源中心</h3>
                 </div>
                 <div class="panel-content">
-                    <div class="resources-list" id="resources-container">
-                        <!-- 资源会动态添加到这里 -->
+                    <div class="section two-column" id="resources-container">
+                        <div class="col" id="resources-col-1"></div>
+                        <div class="col" id="resources-col-2"></div>
                     </div>
-                    
-                    <!-- 动态文字反馈区移动到这里 -->
                     <div class="feedback-area" id="feedback-area">
                         <!-- 动态反馈会出现在这里，如 "+5 🌾" -->
                     </div>
@@ -48,11 +87,24 @@
             <!-- 中部操作面板 -->
             <div class="center-panel panel">
                 <div class="panel-header">
-                    <h3>操作</h3>
+                    <h3>操作面板</h3>
                 </div>
                 <div class="panel-content">
-                    <div class="action-buttons" id="action-buttons">
-                        <!-- 操作按钮将由JS动态添加 -->
+                    <div class="section two-column" id="action-buttons">
+                        <div class="col" id="action-col-1"></div>
+                        <div class="col" id="action-col-2"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 新增：交易市场面板 -->
+            <div class="market-panel panel">
+                <div class="panel-header">
+                    <h3>交易市场</h3>
+                </div>
+                <div class="panel-content">
+                    <div id="market-container">
+                        <!-- 交易市场内容将在这里渲染 -->
                     </div>
                 </div>
             </div>
@@ -65,8 +117,7 @@
                 <div class="panel-content">
                     <!-- 游戏消息区 -->
                     <div class="message-area" id="message-area">
-                        <p>欢迎来到栖迟之墟，这里是你的新家园。</p>
-                        <p>点击中间的按钮开始你的农场之旅吧！</p>
+                        <p>🎉 欢迎来到栖迟之墟 🎉</p>
                     </div>
                 </div>
             </div>
@@ -74,9 +125,8 @@
         
         <!-- 底部状态栏 -->
         <footer class="bottom-bar">
-            <div class="status-text" id="current-status">平静的一天...</div>
-            <div class="save-status" id="save-status">自动保存</div>
         </footer>
+
     </div>
 
     <!-- 弹窗模板 -->

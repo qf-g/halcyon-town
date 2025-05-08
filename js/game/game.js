@@ -52,8 +52,16 @@ export function handleAction(actionId) {
 export function handleGenericAction(actionId) {
     const item = items.find(i => i.type === 'action' && i.id === actionId);
     if (!item) return;
-    const cost = item.cost || {};
+    let cost = item.cost || {};
     const produce = item.produce || {};
+    // 检查是否为建造类操作，自动用目标建筑buildCost
+    if (/^build-/.test(item.id) && item.produce) {
+        const targetId = Object.keys(item.produce)[0];
+        const target = items.find(i => i.id === targetId && (i.type === 'building' || i.type === 'facility'));
+        if (target && target.buildCost) {
+            cost = target.buildCost;
+        }
+    }
     if (!hasResources(cost)) {
         showMessage('资源不足，无法执行操作', 'warning');
         return;
@@ -62,7 +70,8 @@ export function handleGenericAction(actionId) {
     // 产出资源或建筑
     for (const key in produce) {
         if (key === 'populationMax') continue; // 人口上限特殊处理
-        if (items.find(i => i.type === 'building' && i.id === key)) {
+        // 支持 building 和 facility 都能增加建筑数量
+        if (items.find(i => (i.type === 'building' || i.type === 'facility') && i.id === key)) {
             addBuilding(key, produce[key]);
         } else {
             addResource(key, produce[key]);
